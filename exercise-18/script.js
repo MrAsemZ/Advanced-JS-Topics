@@ -1,244 +1,338 @@
 // ========================================
-// Exercise 19 — Cookies & Preferences
-// Manager
+// Exercise 18 — Session Storage
+// Multi-Step Form
 // ========================================
 
 
 // ========================================
-// 1. Set a cookie
+// 1. Get the HTML elements
 // ========================================
 
-// name = cookie name
-// value = cookie value
-// days = how many days it should exist
+var step1 = document.getElementById("step1");
 
-function setCookie(name, value, days) {
+var step2 = document.getElementById("step2");
 
-    // Create a date.
+var step3 = document.getElementById("step3");
 
-    var date = new Date();
+var nameInput = document.getElementById("name");
+
+var emailInput = document.getElementById("email");
+
+var universityInput =
+    document.getElementById("university");
+
+var majorInput =
+    document.getElementById("major");
+
+var review =
+    document.getElementById("review");
 
 
-    // Add the number of days.
+// ========================================
+// 2. Get saved registration data
+// ========================================
 
-    date.setTime(
-        date.getTime() +
-        (days * 24 * 60 * 60 * 1000)
+// sessionStorage stores strings.
+//
+// We use JSON.parse() to turn the
+// saved string back into an object.
+//
+// If nothing is saved, use an empty object.
+
+var registration = JSON.parse(
+    sessionStorage.getItem("registration")
+) || {};
+
+
+// ========================================
+// 3. Get the saved step
+// ========================================
+
+// sessionStorage stores values as strings.
+//
+// Number() converts the value into a number.
+//
+// If there is no saved step,
+// start at step 1.
+
+var currentStep = Number(
+    sessionStorage.getItem("currentStep")
+) || 1;
+
+
+// ========================================
+// 4. Restore saved input values
+// ========================================
+
+// If the user refreshes the page,
+// put their saved information back
+// into the input fields.
+
+nameInput.value =
+    registration.name || "";
+
+emailInput.value =
+    registration.email || "";
+
+universityInput.value =
+    registration.university || "";
+
+majorInput.value =
+    registration.major || "";
+
+
+// ========================================
+// 5. Save the form data
+// ========================================
+
+function saveData() {
+
+    // Get the current values.
+
+    registration.name = nameInput.value;
+
+    registration.email = emailInput.value;
+
+    registration.university =
+        universityInput.value;
+
+    registration.major =
+        majorInput.value;
+
+
+    // Convert the object into a string
+    // and save it in sessionStorage.
+
+    sessionStorage.setItem(
+        "registration",
+        JSON.stringify(registration)
     );
-
-
-    // Create the expiration date.
-
-    var expires =
-        "expires=" + date.toUTCString();
-
-
-    // Save the cookie.
-
-    document.cookie =
-        name +
-        "=" +
-        value +
-        ";" +
-        expires +
-        ";path=/";
 }
 
 
 // ========================================
-// 2. Read a cookie
+// 6. Save the current step
 // ========================================
 
-function getCookie(name) {
+function saveStep() {
 
-    // Get all cookies.
-
-    var cookies = document.cookie.split(";");
-
-
-    // Check every cookie.
-
-    for (var i = 0; i < cookies.length; i++) {
-
-        var cookie = cookies[i].trim();
-
-
-        // Check if this is the cookie
-        // we are looking for.
-
-        if (cookie.indexOf(name + "=") === 0) {
-
-            // Return the value.
-
-            return cookie.substring(
-                name.length + 1
-            );
-        }
-    }
-
-
-    // Cookie was not found.
-
-    return null;
-}
-
-
-// ========================================
-// 3. Delete a cookie
-// ========================================
-
-function deleteCookie(name) {
-
-    // Setting the expiration date
-    // to the past deletes the cookie.
-
-    document.cookie =
-        name +
-        "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
-}
-
-
-// ========================================
-// 4. Get HTML elements
-// ========================================
-
-var preferences =
-    document.getElementById("preferences");
-
-
-// ========================================
-// 5. Save theme
-// ========================================
-
-function saveTheme(theme) {
-
-    setCookie(
-        "theme",
-        theme,
-        30
+    sessionStorage.setItem(
+        "currentStep",
+        currentStep
     );
-
-    displayPreferences();
 }
 
 
 // ========================================
-// 6. Save language
+// 7. Show the current step
 // ========================================
 
-function saveLanguage(language) {
+function showStep() {
 
-    setCookie(
-        "language",
-        language,
-        30
-    );
+    // Hide all steps.
 
-    displayPreferences();
-}
+    step1.style.display = "none";
 
+    step2.style.display = "none";
 
-// ========================================
-// 7. Display saved preferences
-// ========================================
-
-function displayPreferences() {
-
-    // Read the cookies.
-
-    var theme = getCookie("theme");
-
-    var language = getCookie("language");
+    step3.style.display = "none";
 
 
-    // If no theme exists,
-    // use "Not selected".
+    // Show Step 1.
 
-    if (theme === null) {
+    if (currentStep === 1) {
 
-        theme = "Not selected";
+        step1.style.display = "block";
 
     }
 
 
-    // If no language exists,
-    // use "Not selected".
+    // Show Step 2.
 
-    if (language === null) {
+    if (currentStep === 2) {
 
-        language = "Not selected";
+        step2.style.display = "block";
 
     }
 
 
-    // Display the preferences.
+    // Show Step 3.
 
-    preferences.innerHTML = `
-        <p>Theme: ${theme}</p>
+    if (currentStep === 3) {
 
-        <p>Language: ${language}</p>
+        step3.style.display = "block";
+
+        showReview();
+
+    }
+
+
+    // Save the current step.
+
+    saveStep();
+}
+
+
+// ========================================
+// 8. Show the review information
+// ========================================
+
+function showReview() {
+
+    review.innerHTML = `
+        <p>Name: ${registration.name}</p>
+
+        <p>Email: ${registration.email}</p>
+
+        <p>University: ${registration.university}</p>
+
+        <p>Major: ${registration.major}</p>
     `;
 }
 
 
 // ========================================
-// 8. Theme buttons
+// 9. Step 1 → Step 2
 // ========================================
 
-document.getElementById("lightBtn")
+document.getElementById("next1")
     .addEventListener("click", function() {
 
-        saveTheme("light");
+        // Save the information first.
 
-    });
-
-
-document.getElementById("darkBtn")
-    .addEventListener("click", function() {
-
-        saveTheme("dark");
-
-    });
+        saveData();
 
 
-// ========================================
-// 9. Language buttons
-// ========================================
+        // Move to Step 2.
 
-document.getElementById("englishBtn")
-    .addEventListener("click", function() {
-
-        saveLanguage("English");
-
-    });
+        currentStep = 2;
 
 
-document.getElementById("arabicBtn")
-    .addEventListener("click", function() {
+        // Show Step 2.
 
-        saveLanguage("Arabic");
+        showStep();
 
     });
 
 
 // ========================================
-// 10. Delete preferences
+// 10. Step 2 → Step 1
 // ========================================
 
-document.getElementById("deleteBtn")
+document.getElementById("back2")
     .addEventListener("click", function() {
 
-        deleteCookie("theme");
+        // Save any changes.
 
-        deleteCookie("language");
+        saveData();
 
-        displayPreferences();
+
+        // Move back to Step 1.
+
+        currentStep = 1;
+
+
+        // Show Step 1.
+
+        showStep();
 
     });
 
 
 // ========================================
-// 11. Display preferences on page load
+// 11. Step 2 → Step 3
 // ========================================
 
-displayPreferences();
+document.getElementById("next2")
+    .addEventListener("click", function() {
+
+        // Save the information.
+
+        saveData();
+
+
+        // Move to Step 3.
+
+        currentStep = 3;
+
+
+        // Show the review page.
+
+        showStep();
+
+    });
+
+
+// ========================================
+// 12. Step 3 → Step 2
+// ========================================
+
+document.getElementById("back3")
+    .addEventListener("click", function() {
+
+        // Save any changes.
+
+        saveData();
+
+
+        // Move back to Step 2.
+
+        currentStep = 2;
+
+
+        // Show Step 2.
+
+        showStep();
+
+    });
+
+
+// ========================================
+// 13. Confirm registration
+// ========================================
+
+document.getElementById("confirm")
+    .addEventListener("click", function() {
+
+        alert("Registration completed!");
+
+
+        // Delete the saved information.
+
+        sessionStorage.removeItem("registration");
+
+        sessionStorage.removeItem("currentStep");
+
+
+        // Reset the form.
+
+        registration = {};
+
+        nameInput.value = "";
+        emailInput.value = "";
+        universityInput.value = "";
+        majorInput.value = "";
+
+
+        // Start again from Step 1.
+
+        currentStep = 1;
+
+        showStep();
+
+    });
+
+
+// ========================================
+// 14. Start the application
+// ========================================
+
+// This is important.
+//
+// If the user was on Step 2 and
+// refreshed the page, currentStep
+// will still be 2.
+//
+// So Step 2 will appear again.
+
+showStep();

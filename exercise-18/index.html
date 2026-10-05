@@ -1,60 +1,102 @@
-// ========================================
-// Exercise 19 — Cookies & Preferences
-// Manager
-// ========================================
-
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Preferences Manager</title>
+    <title>Registration Form</title>
 </head>
 
 <body>
 
-    <h1>User Preferences</h1>
+    <h1>Registration Form</h1>
 
 
-    <!-- Theme -->
+    <!-- ========================================
+         STEP 1 — Personal Information
+         ======================================== -->
 
-    <h2>Theme</h2>
+    <div id="step1">
 
-    <button id="lightBtn">
-        Light
-    </button>
+        <h2>Step 1: Personal Information</h2>
 
-    <button id="darkBtn">
-        Dark
-    </button>
+        <label>Name:</label>
+        <input
+            type="text"
+            id="name"
+        >
 
+        <br><br>
 
-    <!-- Language -->
+        <label>Email:</label>
+        <input
+            type="email"
+            id="email"
+        >
 
-    <h2>Language</h2>
+        <br><br>
 
-    <button id="englishBtn">
-        English
-    </button>
+        <button id="next1">
+            Next
+        </button>
 
-    <button id="arabicBtn">
-        Arabic
-    </button>
-
-
-    <!-- Saved preferences -->
-
-    <h2>Saved Preferences</h2>
-
-    <div id="preferences"></div>
+    </div>
 
 
-    <!-- Delete preferences -->
+    <!-- ========================================
+         STEP 2 — Educational Information
+         ======================================== -->
 
-    <br>
+    <div id="step2">
 
-    <button id="deleteBtn">
-        Delete Preferences
-    </button>
+        <h2>Step 2: Educational Information</h2>
+
+        <label>University:</label>
+        <input
+            type="text"
+            id="university"
+        >
+
+        <br><br>
+
+        <label>Major:</label>
+        <input
+            type="text"
+            id="major"
+        >
+
+        <br><br>
+
+        <button id="back2">
+            Back
+        </button>
+
+        <button id="next2">
+            Next
+        </button>
+
+    </div>
+
+
+    <!-- ========================================
+         STEP 3 — Review and Confirm
+         ======================================== -->
+
+    <div id="step3">
+
+        <h2>Step 3: Review and Confirm</h2>
+
+        <div id="review"></div>
+
+        <br>
+
+        <button id="back3">
+            Back
+        </button>
+
+        <button id="confirm">
+            Confirm
+        </button>
+
+    </div>
 
 
     <script src="script.js"></script>
