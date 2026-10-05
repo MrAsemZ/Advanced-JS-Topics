@@ -1,0 +1,217 @@
+// ========================================
+// Exercise 6 — Product Inventory Analyzer
+// ========================================
+
+
+// ========================================
+// 1. Create the first inventory
+// ========================================
+
+var inventory1 = [
+
+    {
+        id: 1,
+        name: "Laptop",
+        price: 800,
+        category: "Electronics",
+        quantity: 10
+    },
+
+    {
+        id: 2,
+        name: "Phone",
+        price: 500,
+        category: "Electronics",
+        quantity: 20
+    },
+
+    {
+        id: 3,
+        name: "Keyboard",
+        price: 50,
+        category: "Accessories",
+        quantity: 30
+    },
+
+    {
+        id: 4,
+        name: "Mouse",
+        price: 30,
+        category: "Accessories",
+        quantity: 40
+    },
+
+    {
+        id: 5,
+        name: "Monitor",
+        price: 300,
+        category: "Electronics",
+        quantity: 15
+    },
+
+    {
+        id: 6,
+        name: "Headphones",
+        price: 100,
+        category: "Audio",
+        quantity: 25
+    }
+];
+
+
+// ========================================
+// 2. Create the second inventory
+// ========================================
+
+var inventory2 = [
+
+    {
+        id: 7,
+        name: "Tablet",
+        price: 400,
+        category: "Electronics",
+        quantity: 12
+    },
+
+    {
+        id: 8,
+        name: "Speaker",
+        price: 150,
+        category: "Audio",
+        quantity: 18
+    },
+
+    {
+        id: 9,
+        name: "Webcam",
+        price: 80,
+        category: "Accessories",
+        quantity: 22
+    },
+
+    {
+        id: 10,
+        name: "Printer",
+        price: 250,
+        category: "Office",
+        quantity: 8
+    },
+
+    {
+        id: 11,
+        name: "Smart Watch",
+        price: 200,
+        category: "Electronics",
+        quantity: 14
+    }
+];
+
+
+// ========================================
+// 3. Use concat()
+// ========================================
+
+// concat() combines two arrays.
+//
+// inventory1 + inventory2
+// = one big inventory
+
+var inventory = inventory1.concat(inventory2);
+
+console.log("Complete inventory:");
+console.log(inventory);
+
+
+// ========================================
+// 4. Use sort() to order by price
+// ========================================
+
+// sort() normally sorts alphabetically.
+//
+// We use a function to sort by price.
+//
+// a.price - b.price
+// = lowest price to highest price
+
+inventory.sort(function(a, b) {
+
+    return a.price - b.price;
+
+});
+
+console.log("Products sorted by price:");
+console.log(inventory);
+
+
+// ========================================
+// 5. Use includes()
+// ========================================
+
+// Create a list of available categories.
+
+var availableCategories = [
+    "Electronics",
+    "Accessories",
+    "Audio",
+    "Office"
+];
+
+
+// Check if a category exists.
+
+var categoryExists = availableCategories.includes("Electronics");
+
+console.log("Is Electronics available?");
+console.log(categoryExists);
+
+
+// includes() returns:
+// true  → category exists
+// false → category does not exist
+
+
+
+// ========================================
+// 6. Use splice() to remove a product
+// ========================================
+
+// Let's say the Mouse is discontinued.
+//
+// splice() removes items from an array.
+//
+// First number = starting index
+// Second number = number of items to remove
+
+inventory.splice(1, 1);
+
+console.log("After removing discontinued product:");
+console.log(inventory);
+
+
+// ========================================
+// 7. Use slice()
+// ========================================
+
+// slice() creates a copy of part
+// of the array.
+//
+// 0 = start at the beginning
+// 5 = stop before index 5
+
+var firstFiveProducts = inventory.slice(0, 5);
+
+console.log("First five products:");
+console.log(firstFiveProducts);
+
+
+// slice() does NOT remove them
+// from the original inventory.
+
+
+// ========================================
+// Final inventory
+// ========================================
+
+console.log("Final inventory:");
+
+console.log(inventory);
